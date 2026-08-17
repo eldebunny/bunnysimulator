@@ -1,0 +1,94 @@
+:root {
+  --ink: #302737;
+  --cream: #fffaf1;
+  --pink: #e97d9c;
+  --pink-dark: #bc5475;
+  --lavender: #756684;
+  --shadow: 0 18px 50px rgb(38 25 42 / 25%);
+}
+
+* { box-sizing: border-box; }
+
+html, body { width: 100%; height: 100%; margin: 0; }
+
+body {
+  overflow: hidden;
+  color: var(--ink);
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+  background: #251f2c;
+}
+
+button { color: inherit; font: inherit; }
+button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+
+.screen { position: absolute; inset: 0; display: none; min-height: 100%; }
+.screen.is-active { display: flex; }
+
+.title-screen {
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 20%, rgb(255 255 255 / 55%) 0 3px, transparent 4px),
+    radial-gradient(circle at 85% 76%, rgb(255 255 255 / 45%) 0 4px, transparent 5px),
+    linear-gradient(145deg, #f9d5de, #d9d0ee 58%, #c3dce2);
+}
+
+.title-screen::before, .title-screen::after {
+  position: absolute;
+  width: 35vw;
+  height: 55vw;
+  max-width: 370px;
+  max-height: 580px;
+  border: 2px solid rgb(255 255 255 / 45%);
+  border-radius: 50%;
+  content: "";
+}
+.title-screen::before { top: -36vw; left: -5vw; transform: rotate(-18deg); }
+.title-screen::after { right: -7vw; bottom: -38vw; transform: rotate(24deg); }
+
+.title-card { z-index: 1; width: min(88vw, 640px); padding: 60px; text-align: center; background: rgb(255 250 241 / 78%); border: 1px solid #fff; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
+.eyebrow, .bad-end-number { margin: 0 0 15px; color: var(--pink-dark); font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+h1 { margin: 0; font-family: Georgia, serif; font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 400; letter-spacing: -.06em; line-height: .8; }
+h1 span { display: block; margin-top: 18px; color: var(--pink-dark); font-family: inherit; font-size: .41em; font-style: italic; letter-spacing: .22em; }
+.title-copy { margin: 42px 0 30px; color: var(--lavender); }
+.title-actions, .bad-end-actions { display: grid; gap: 12px; margin: auto; max-width: 320px; }
+.primary-button, .secondary-button { min-height: 52px; padding: 12px 20px; border: 1px solid var(--pink-dark); cursor: pointer; letter-spacing: .12em; transition: .2s ease; }
+.primary-button { color: #fff; background: var(--pink-dark); }
+.secondary-button { background: transparent; }
+.primary-button:hover, .secondary-button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgb(188 84 117 / 25%); }
+.title-note { position: absolute; bottom: 20px; color: rgb(48 39 55 / 50%); font: .65rem monospace; letter-spacing: .12em; }
+
+.game-screen { flex-direction: column; background: #b8d2d7; }
+.scene-background { position: absolute; inset: 0; background: center / cover no-repeat; transition: background-image .3s; }
+.scene-background::after { position: absolute; inset: 0; background: linear-gradient(transparent 45%, rgb(28 23 33 / 35%)); content: ""; }
+.game-header { z-index: 2; display: flex; align-items: center; gap: 16px; padding: 18px 26px; color: rgb(255 255 255 / 85%); font: .67rem monospace; letter-spacing: .12em; }
+.icon-button { width: 38px; height: 38px; border: 1px solid rgb(255 255 255 / 60%); border-radius: 50%; color: #fff; background: rgb(35 28 40 / 25%); cursor: pointer; }
+.scene-stage { position: absolute; inset: 4% 0 160px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+.character-sprite { width: min(48vw, 430px); max-height: 94%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 15px 18px rgb(40 30 45 / 20%)); }
+.message-window { z-index: 3; position: absolute; right: 5%; bottom: 4%; left: 5%; min-height: 140px; padding: 32px clamp(30px, 6vw, 80px); border: 1px solid rgb(255 255 255 / 60%); color: #fff; text-align: left; background: rgb(38 30 45 / 89%); box-shadow: var(--shadow); cursor: pointer; backdrop-filter: blur(8px); }
+.speaker-name { display: block; margin-bottom: 13px; color: #f4a9be; font-size: .78rem; font-weight: 700; letter-spacing: .12em; }
+.message-text { font-size: clamp(1rem, 1.7vw, 1.18rem); line-height: 1.9; }
+.next-indicator { position: absolute; right: 24px; bottom: 17px; color: #f4a9be; font-size: .7rem; animation: bounce 1s infinite; }
+.choices { z-index: 4; position: absolute; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px; padding: 20px; background: rgb(31 24 36 / 44%); backdrop-filter: blur(3px); }
+.choices.is-visible { display: flex; }
+.choice-button { width: min(90vw, 580px); min-height: 64px; padding: 14px 24px; border: 1px solid #fff; color: var(--ink); background: rgb(255 250 241 / 94%); box-shadow: 0 10px 25px rgb(25 18 29 / 20%); cursor: pointer; transition: .18s; }
+.choice-button:hover, .choice-button:focus-visible { color: #fff; background: var(--pink-dark); transform: translateX(5px); }
+
+.bad-end-screen { align-items: center; justify-content: center; color: #eee7ea; background: radial-gradient(circle at center, #46353f, #161318 68%); }
+.bad-end-card { width: min(88vw, 620px); padding: 55px; border: 1px solid rgb(255 255 255 / 12%); text-align: center; background: rgb(10 8 11 / 28%); box-shadow: 0 30px 80px #000; }
+.bad-end-card h2 { margin: 0; color: #bd6076; font: 400 clamp(3rem, 9vw, 6.5rem) Georgia, serif; letter-spacing: .08em; }
+#bad-end-reason { min-height: 4em; margin: 28px 0 36px; line-height: 2; }
+.bad-end-card .secondary-button { color: #ddd; border-color: #6d5f66; }
+
+@keyframes bounce { 50% { transform: translateY(4px); } }
+
+@media (max-width: 600px) {
+  .title-card, .bad-end-card { padding: 40px 22px; }
+  .scene-stage { inset-bottom: 190px; }
+  .character-sprite { width: min(78vw, 380px); }
+  .message-window { right: 3%; bottom: 2%; left: 3%; min-height: 165px; padding: 24px; }
+  .game-header { padding: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#241d2d">
+  <title>bunnysimulator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="app">
+    <section id="title-screen" class="screen title-screen is-active" aria-labelledby="game-title">
+      <div class="title-card">
+        <p class="eyebrow">A tiny visual novel prototype</p>
+        <h1 id="game-title">bunny<span>simulator</span></h1>
+        <p class="title-copy">今日は、うさぴょんと遊ぶ約束の日。</p>
+        <div class="title-actions">
+          <button id="start-button" class="primary-button">START</button>
+          <button id="continue-button" class="secondary-button" hidden>CONTINUE</button>
+        </div>
+      </div>
+      <p class="title-note">click / enter / space</p>
+    </section>
+
+    <section id="game-screen" class="screen game-screen" aria-label="ノベルゲーム画面">
+      <div id="scene-background" class="scene-background"></div>
+      <header class="game-header">
+        <button id="title-button" class="icon-button" aria-label="タイトルへ戻る">⌂</button>
+        <span>DAY OFF · 10:30</span>
+      </header>
+      <div class="scene-stage">
+        <img id="character-sprite" class="character-sprite" alt="">
+      </div>
+      <div id="choices" class="choices" aria-label="選択肢"></div>
+      <button id="message-window" class="message-window" aria-label="クリックして文章を進める">
+        <span id="speaker-name" class="speaker-name"></span>
+        <span id="message-text" class="message-text"></span>
+        <span class="next-indicator" aria-hidden="true">▼</span>
+      </button>
+    </section>
+
+    <section id="bad-end-screen" class="screen bad-end-screen" aria-labelledby="bad-end-title">
+      <div class="bad-end-card">
+        <p class="bad-end-number">ROUTE TERMINATED</p>
+        <h2 id="bad-end-title">BAD END</h2>
+        <p id="bad-end-reason"></p>
+        <div class="bad-end-actions">
+          <button id="retry-button" class="primary-button">直前の選択肢からやり直す</button>
+          <button id="bad-title-button" class="secondary-button">タイトルへ戻る</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="js/scenario.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
