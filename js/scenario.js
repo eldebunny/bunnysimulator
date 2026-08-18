@@ -8,8 +8,8 @@ window.SCENARIO = {
     meeting_01: {
       type: "line", speaker: "うさぴょん",
       text: "来た！　今日は遊ぶ約束、忘れてなかったんだね。",
-      background: "assets/backgrounds/park.svg",
-      sprite: "assets/characters/usapyon-normal.svg",
+      background: "assets/backgrounds/city-day.jpg",
+      sprite: "assets/characters/usapyon.png",
       next: "meeting_02"
     },
     meeting_02: {
