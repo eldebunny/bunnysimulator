@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#241d2d">
+  <title>うさうさ散歩</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="app">
+    <section id="title-screen" class="screen title-screen is-active" aria-labelledby="game-title">
+      <div class="title-card">
+        <h1 id="game-title">うさうさ散歩</h1>
+        <div class="title-actions">
+          <button id="start-button" class="primary-button">START</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="game-screen" class="screen game-screen" aria-label="ノベルゲーム画面">
+      <div id="scene-background" class="scene-background"></div>
+      <header class="game-header">
+        <button id="title-button" class="icon-button" aria-label="タイトルへ戻る">⌂</button>
+        <span>DAY OFF · 10:30</span>
+      </header>
+      <div class="scene-stage">
+        <img id="character-sprite" class="character-sprite" alt="">
+      </div>
+      <div id="choices" class="choices" aria-label="選択肢"></div>
+      <button id="message-window" class="message-window" aria-label="クリックして文章を進める">
+        <span id="speaker-name" class="speaker-name"></span>
+        <span id="message-text" class="message-text"></span>
+        <span class="next-indicator" aria-hidden="true">▼</span>
+      </button>
+      <div id="bad-end-overlay" class="bad-end-overlay" aria-hidden="true">
+        <div class="blood blood-left"></div>
+        <div class="blood blood-right"></div>
+        <div class="death-copy">
+          <h2>あなた死亡</h2>
+          <p id="bad-end-reason"></p>
+          <button id="retry-button" class="retry-button">直前の選択肢からやり直す</button>
+        </div>
+        <img id="mini-usapyon" class="mini-usapyon" alt="悪魔の角が生えたミニうさぴょん" hidden>
+      </div>
+    </section>
+
+    <section id="development-end-screen" class="screen development-end-screen" aria-label="開発版終了">
+      <p>続きは制作中</p>
+      <button id="end-title-button" class="secondary-button">タイトルへ戻る</button>
+    </section>
+  </main>
+  <script src="js/scenario.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
