@@ -11,15 +11,11 @@
   <main id="app">
     <section id="title-screen" class="screen title-screen is-active" aria-labelledby="game-title">
       <div class="title-card">
-        <p class="eyebrow">A tiny walking story</p>
         <h1 id="game-title">うさうさ<span>散歩</span></h1>
-        <p class="title-copy">うさぴょんと、街をお散歩する日。</p>
         <div class="title-actions">
           <button id="start-button" class="primary-button">START</button>
-          <button id="continue-button" class="secondary-button" hidden>CONTINUE</button>
         </div>
       </div>
-      <p class="title-note">click / enter / space</p>
     </section>
 
     <section id="game-screen" class="screen game-screen" aria-label="ノベルゲーム画面">
@@ -37,16 +33,14 @@
         <span id="message-text" class="message-text"></span>
         <span class="next-indicator" aria-hidden="true">▼</span>
       </button>
-    </section>
-
-    <section id="bad-end-screen" class="screen bad-end-screen" aria-labelledby="bad-end-title">
-      <div class="bad-end-card">
-        <p class="bad-end-number">ROUTE TERMINATED</p>
-        <h2 id="bad-end-title">BAD END</h2>
-        <p id="bad-end-reason"></p>
-        <div class="bad-end-actions">
+      <div id="bad-end-overlay" class="bad-end-overlay" aria-hidden="true">
+        <div class="blood blood-top"></div>
+        <div class="blood blood-bottom"></div>
+        <img id="devil-usapyon" class="devil-usapyon" alt="悪魔のミニうさぴょん">
+        <div class="bad-end-content" role="dialog" aria-labelledby="bad-end-title" aria-describedby="bad-end-reason">
+          <h2 id="bad-end-title">あなた死亡</h2>
+          <p id="bad-end-reason"></p>
           <button id="retry-button" class="primary-button">直前の選択肢からやり直す</button>
-          <button id="bad-title-button" class="secondary-button">タイトルへ戻る</button>
         </div>
       </div>
     </section>

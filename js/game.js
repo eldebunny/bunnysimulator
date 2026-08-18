@@ -4,13 +4,17 @@
   let save = window.SaveData.load();
   let currentNodeId = null;
   let acceptingInput = false;
+  let typingTimer = null;
+  let fullText = "";
+  let isTyping = false;
+  const TYPE_INTERVAL = 42;
 
   const elements = {
     screens: document.querySelectorAll(".screen"),
     title: document.querySelector("#title-screen"), game: document.querySelector("#game-screen"),
-    badEnd: document.querySelector("#bad-end-screen"), start: document.querySelector("#start-button"),
-    continue: document.querySelector("#continue-button"), titleButton: document.querySelector("#title-button"),
-    badTitle: document.querySelector("#bad-title-button"), retry: document.querySelector("#retry-button"),
+    start: document.querySelector("#start-button"), titleButton: document.querySelector("#title-button"),
+    retry: document.querySelector("#retry-button"), overlay: document.querySelector("#bad-end-overlay"),
+    devil: document.querySelector("#devil-usapyon"),
     background: document.querySelector("#scene-background"), sprite: document.querySelector("#character-sprite"),
     speaker: document.querySelector("#speaker-name"), text: document.querySelector("#message-text"),
     message: document.querySelector("#message-window"), choices: document.querySelector("#choices"),
@@ -23,7 +27,7 @@
 
   function showTitle() {
     save = window.SaveData.load();
-    elements.continue.hidden = !save.currentNode;
+    clearBadEnd();
     showScreen(elements.title);
   }
 
@@ -31,6 +35,8 @@
     save.newGameCount += 1;
     save.currentNode = scenario.startNode;
     save.checkpointNode = null;
+    elements.sprite.removeAttribute("src");
+    elements.sprite.alt = "";
     window.SaveData.save(save);
     renderNode(scenario.startNode);
   }
@@ -43,11 +49,12 @@
     window.SaveData.save(save);
 
     if (node.type === "badEnd") return showBadEnd(node);
+    clearBadEnd();
     showScreen(elements.game);
     acceptingInput = node.type === "line";
     elements.speaker.textContent = node.speaker || "";
     elements.speaker.hidden = !node.speaker;
-    elements.text.textContent = node.text || "";
+    displayText(node.text || "");
     if (node.background) elements.background.style.backgroundImage = `url("${node.background}")`;
     if (node.sprite) { elements.sprite.src = node.sprite; elements.sprite.alt = node.speaker || "キャラクター"; }
     elements.choices.replaceChildren();
@@ -70,6 +77,7 @@
 
   function advance() {
     if (!acceptingInput) return;
+    if (isTyping) { finishTyping(); return; }
     const node = scenario.nodes[currentNodeId];
     if (node?.next) renderNode(node.next);
   }
@@ -86,21 +94,50 @@
     if (!save.seenBadEnds.includes(node.id)) save.seenBadEnds.push(node.id);
     window.SaveData.save(save);
     elements.reason.textContent = node.reason;
-    showScreen(elements.badEnd);
-    elements.retry.focus();
+    elements.overlay.classList.add("is-visible");
+    elements.overlay.setAttribute("aria-hidden", "false");
+    window.setTimeout(() => elements.retry.focus(), 900);
+  }
+
+  function displayText(text) {
+    window.clearInterval(typingTimer);
+    fullText = text;
+    elements.text.textContent = "";
+    isTyping = Boolean(text);
+    let position = 0;
+    typingTimer = window.setInterval(() => {
+      position += 1;
+      elements.text.textContent = fullText.slice(0, position);
+      if (position >= fullText.length) finishTyping();
+    }, TYPE_INTERVAL);
+  }
+
+  function finishTyping() {
+    window.clearInterval(typingTimer);
+    elements.text.textContent = fullText;
+    isTyping = false;
+  }
+
+  function clearBadEnd() {
+    elements.overlay.classList.remove("is-visible");
+    elements.overlay.setAttribute("aria-hidden", "true");
   }
 
   elements.start.addEventListener("click", startNewGame);
-  elements.continue.addEventListener("click", () => renderNode(save.currentNode));
   elements.message.addEventListener("click", advance);
   elements.titleButton.addEventListener("click", showTitle);
-  elements.badTitle.addEventListener("click", showTitle);
-  elements.retry.addEventListener("click", () => renderNode(save.checkpointNode || scenario.startNode));
+  elements.retry.addEventListener("click", () => {
+    clearBadEnd();
+    renderNode(save.checkpointNode || scenario.startNode);
+  });
   document.addEventListener("keydown", (event) => {
     if ((event.key === "Enter" || event.key === " ") && elements.game.classList.contains("is-active") && !elements.choices.classList.contains("is-visible")) {
       event.preventDefault(); advance();
     }
   });
 
+  elements.devil.addEventListener("load", () => elements.devil.classList.add("has-image"));
+  elements.devil.addEventListener("error", () => elements.devil.removeAttribute("src"));
+  elements.devil.src = "assets/characters/usapyon-devil-mini.png";
   showTitle();
 }());
