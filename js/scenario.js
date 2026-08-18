@@ -3,41 +3,66 @@
  * type: "line" は台詞、"choice" は選択肢、"badEnd" はBAD ENDです。
  */
 window.SCENARIO = {
-  startNode: "meeting_01",
+  startNode: "intro_01",
   nodes: {
-    meeting_01: {
-      type: "line", speaker: "うさぴょん",
-      text: "来た！　今日は遊ぶ約束、忘れてなかったんだね。",
+    intro_01: {
+      type: "line",
+      text: "今日はうさぴょんと遊ぶ約束をしていたっけ",
       background: "assets/backgrounds/city-day.jpg",
-      sprite: "assets/characters/usapyon.png",
-      next: "meeting_02"
+      next: "intro_02"
     },
-    meeting_02: {
-      type: "line", speaker: "うさぴょん",
-      text: "まずは公園を歩こうか。それとも、その前にひとつ質問。",
-      next: "snack_choice"
+    intro_02: {
+      type: "line",
+      text: "どこに行くんだったっけかな...",
+      next: "outing_choice"
     },
-    snack_choice: {
-      type: "choice", speaker: "うさぴょん",
-      text: "おやつを持ってきたんだけど、どこで食べる？",
+    outing_choice: {
+      type: "choice",
       choices: [
-        { text: "ベンチに座って食べよう", next: "bench_accident", recordAs: "bench" },
-        { text: "地面に正座して北を向いて食べよう", next: "continue_01", recordAs: "north_seiza" }
+        { text: "やっぱアウトドアっしょ！", next: "meteor_bad_end", recordAs: "outdoor" },
+        { text: "あいつ陰キャだしどうせヲタ活だろうなぁ...", next: "usapyon_01", recordAs: "otaku" }
       ]
     },
-    bench_accident: {
-      type: "badEnd", id: "falling_bench",
-      reason: "ベンチは突如として発進した。あなたは振り落とされ、帰らぬ人となった。"
+    meteor_bad_end: {
+      type: "badEnd", id: "meteor",
+      reason: "突如飛来した隕石によってこんがり焼けた\n外に出なければこんな目に合わなかったのにネ"
     },
-    continue_01: {
+    usapyon_01: {
       type: "line", speaker: "うさぴょん",
-      text: "……ずいぶん独特。でも、今日はそういう日にしよう。",
-      next: "prototype_end"
+      text: "おまたせ～！待った？",
+      sprite: "assets/characters/usapyon.png",
+      next: "usapyon_02"
+    },
+    usapyon_02: {
+      type: "line", speaker: "うさぴょん",
+      text: "ねぇねぇ何分待った？何時間待った？",
+      next: "reaction_choice"
+    },
+    reaction_choice: {
+      type: "choice",
+      choices: [
+        { text: "（唐突にうさぴょんに腹パンをかます）", next: "usapyon_punched_01", recordAs: "punch" },
+        { text: "いまきたところだよ", next: "killer_rabbit_01", recordAs: "just_arrived" }
+      ]
+    },
+    killer_rabbit_01: {
+      type: "line", text: "やせい　の　さつじんうさぎ　があらわれた！", next: "killer_rabbit_02"
+    },
+    killer_rabbit_02: {
+      type: "line", text: "さつじんうさぎ　の　さつじんキック！", next: "kick_bad_end"
+    },
+    kick_bad_end: {
+      type: "badEnd", id: "killer_kick",
+      reason: "さつじんうさぎ　の　さつじんキック！"
+    },
+    usapyon_punched_01: {
+      type: "line", speaker: "うさぴょん", text: "グエー死んだンゴｗ", next: "usapyon_punched_02"
+    },
+    usapyon_punched_02: {
+      type: "line", speaker: "うさぴょん", text: "...なんてね！それじゃあいこっか！", next: "prototype_end"
     },
     prototype_end: {
-      type: "line", speaker: "うさぴょん",
-      text: "この先のお話は、まだ準備中。また遊ぼうね。",
-      next: "prototype_end"
+      type: "line", text: "続きは制作中"
     }
   }
 };
